@@ -45,9 +45,3 @@ Ensure you have the following installed on your machine:
    npm start
 
 
-Detailed View
-
-Reward Information: Provides in-depth details about individual rewards, including descriptions, issuance dates, and redemption status.
-Interactive Elements: Users can interact with detailed data, such as viewing transaction history or managing reward preferences.
-Actionable Insights: Access to actionable insights or recommendations based on reward activity and usage patterns.
->>>>>>> ee6eb71633cdaf4893cf2abb73ba32cb92d4449b
