@@ -1,17 +1,12 @@
 # User Rewards Portal
 
-<<<<<<< HEAD
-## Overview
-=======
 
-Overview
->>>>>>> ee6eb71633cdaf4893cf2abb73ba32cb92d4449b
+## Overview
 
 The User Rewards Portal is a robust and user-friendly application designed to manage and showcase user rewards efficiently. It provides a centralized platform for users to track, sort, and view their rewards, with an emphasis on a seamless user experience and intuitive navigation.
 
 ## Features
 
-<<<<<<< HEAD
 ### Dashboard
 * Total Rewards Overview: Displays a comprehensive snapshot of the total rewards accumulated by users, including graphical representations such as charts or graphs.
 * Key Metrics: Highlights important metrics related to rewards, such as total rewards issued, redeemed, and pending.
@@ -48,17 +43,7 @@ Ensure you have the following installed on your machine:
    npm install
 3. **start the development server**
    npm start
-=======
-Dashboard
 
-Total Rewards Overview: Displays a comprehensive snapshot of the total rewards accumulated by users, including graphical representations such as charts or graphs.
-Key Metrics: Highlights important metrics related to rewards, such as total rewards issued, redeemed, and pending.
-
-Rewards List
-
-Sorting Options: Users can sort rewards based on various criteria such as date, value, or type to quickly locate specific items.
-Search Functionality: A powerful search feature allows users to find rewards by keywords, categories, or other relevant filters.
-Filter Capabilities: Customize views by applying filters to focus on rewards that meet specific criteria or conditions.
 
 Detailed View
 
