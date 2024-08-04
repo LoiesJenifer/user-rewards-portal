@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const RewardList = ({ rewards }) => {
@@ -6,41 +6,46 @@ const RewardList = ({ rewards }) => {
   const [sortField, setSortField] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [filteredSortedRewards, setFilteredSortedRewards] = useState(rewards);
 
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-  };
+  useEffect(() => {
+    const filterAndSortRewards = () => {
+      let updatedRewards = rewards;
 
-  const handleSort = (field) => {
-    setSortField(field);
-  };
+      // Filter by search term
+      if (searchTerm) {
+        updatedRewards = updatedRewards.filter((reward) =>
+          reward.brand.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      }
 
-  const handleStartDateChange = (e) => {
-    setStartDate(e.target.value);
-  };
+      // Filter by date range
+      if (startDate || endDate) {
+        updatedRewards = updatedRewards.filter((reward) => {
+          const rewardDate = new Date(reward.purchaseDate);
+          const start = startDate ? new Date(startDate) : new Date('1970-01-01');
+          const end = endDate ? new Date(endDate) : new Date();
+          return rewardDate >= start && rewardDate <= end;
+        });
+      }
 
-  const handleEndDateChange = (e) => {
-    setEndDate(e.target.value);
-  };
+      // Sort by the specified field
+      if (sortField) {
+        updatedRewards = [...updatedRewards].sort((a, b) => {
+          if (sortField === 'date') {
+            return new Date(b.purchaseDate) - new Date(a.purchaseDate);
+          } else if (sortField === 'points') {
+            return b.rewardPoints - a.rewardPoints;
+          }
+          return 0;
+        });
+      }
 
-  const filteredRewards = rewards.filter((reward) =>
-    reward.brand.toLowerCase().includes(searchTerm.toLowerCase())
-  )
-    .filter((reward) => {
-      const rewardDate = new Date(reward.purchaseDate);
-      const start = startDate ? new Date(startDate) : new Date('1970-01-01');
-      const end = endDate ? new Date(endDate) : new Date();
-      return rewardDate >= start && rewardDate <= end;
-    });
+      setFilteredSortedRewards(updatedRewards);
+    };
 
-  const sortedRewards = [...filteredRewards].sort((a, b) => {
-    if (sortField === 'date') {
-      return new Date(b.purchaseDate) - new Date(a.purchaseDate);
-    } else if (sortField === 'points') {
-      return b.rewardPoints - a.rewardPoints;
-    }
-    return 0;
-  });
+    filterAndSortRewards();
+  }, [searchTerm, sortField, startDate, endDate, rewards]);
 
   return (
     <div className="p-4">
@@ -49,36 +54,36 @@ const RewardList = ({ rewards }) => {
           type="text"
           placeholder="Search by brand"
           value={searchTerm}
-          onChange={handleSearch}
-          className="border rounded p-2 text-grey-700"
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="border rounded p-2 text-gray-700"
         />
         <button
-          onClick={() => handleSort('date')}
-          className="bg-blue-500 text-white rounded p-2 hover:bg-blue-600"
+          onClick={() => setSortField('date')}
+          className="bg-blue-500 text-black rounded p-2 hover:bg-blue-600"
         >
           Sort by Date
         </button>
         <button
-          onClick={() => handleSort('points')}
-          className="bg-blue-500 text-white rounded p-2 hover:bg-blue-600"
+          onClick={() => setSortField('points')}
+          className="bg-blue-500 text-black rounded p-2 hover:bg-blue-600"
         >
           Sort by Points
         </button>
         <input
           type="date"
           value={startDate}
-          onChange={handleStartDateChange}
+          onChange={(e) => setStartDate(e.target.value)}
           className="border rounded p-2 text-gray-700"
         />
         <input
           type="date"
           value={endDate}
-          onChange={handleEndDateChange}
+          onChange={(e) => setEndDate(e.target.value)}
           className="border rounded p-2 text-gray-700"
         />
       </div>
       <ul className="space-y-4">
-        {sortedRewards.map((reward) => (
+        {filteredSortedRewards.map((reward) => (
           <li
             key={reward.id}
             className="border rounded p-4 bg-blue-100 hover:bg-blue-200 transition-colors"
